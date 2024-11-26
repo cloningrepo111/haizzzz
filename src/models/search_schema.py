@@ -1,5 +1,5 @@
 from datetime import datetime, timezone, timedelta
-from typing import Optional, List, Dict
+from typing import Optional, List
 
 from pydantic import BaseModel, Field
 
@@ -21,10 +21,12 @@ class StageModel(SearchModel):
     id: StrictStr | None = None
     stage_name: StrictStr | None = None
     result_id: str = None
+    saved: bool = False
 
 
 class CreateStageModel(StageModel):
-    pipeline_id: str | None = None
+    pipeline_id: str
+    user_id: str | None = None
     created_by: dict | None = None
     created_at: datetime | None = datetime.now(timezone.utc)
 

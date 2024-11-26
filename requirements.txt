@@ -1,0 +1,8 @@
+pydantic
+fastapi
+python-dotenv
+uvicorn
+redis
+motor
+elasticsearch
+sse_starlette
