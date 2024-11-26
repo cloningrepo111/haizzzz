@@ -1,5 +1,5 @@
 from datetime import datetime, timezone, timedelta
-from typing import Optional, List
+from typing import Optional, List, Dict
 
 from pydantic import BaseModel, Field
 
@@ -19,14 +19,12 @@ class SearchModel(BaseModel):
 
 class StageModel(SearchModel):
     id: StrictStr | None = None
-    stage_name: StrictStr | None = None
-    result_id: str = None
+    name: StrictStr | None = None
     saved: bool = False
 
 
 class CreateStageModel(StageModel):
     pipeline_id: str
-    user_id: str | None = None
     created_by: dict | None = None
     created_at: datetime | None = datetime.now(timezone.utc)
 
@@ -37,9 +35,9 @@ class UpdateStageModel(StageModel):
 
 
 class PipelineModel(BaseModel):
-    user_id: str | None = None
-    session_id: str | None = None
-    time: TimeModel
+    name: str | None = None
+    saved: bool = False
+    time: TimeModel = None
     source: List[StrictStr] = Field(default=[])
     tenant: List[StrictStr] = Field(default=[])
     stage_ids: List[StrictStr] = Field(default=[])
@@ -49,4 +47,9 @@ class CreatePipelineModel(PipelineModel):
     created_by: dict | None = None
     created_at: datetime | None = datetime.now(timezone.utc)
 
+
+class UpdatePipelineModel(PipelineModel):
+    id: str
+    updated_by: dict | None = None
+    updated_at: datetime | None = datetime.now(timezone.utc)
 
